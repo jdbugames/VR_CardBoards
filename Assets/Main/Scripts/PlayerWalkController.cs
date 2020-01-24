@@ -5,10 +5,13 @@ using UnityEngine;
 public class PlayerWalkController : MonoBehaviour
 {
     [SerializeField]
-    private GameObject obj_Player;
+    private int int_PlayerSpeed;
 
     [SerializeField]
-    private int int_PlayerSpeed;
+    public GameObject obj_Wall;
+
+    [SerializeField]
+    public int int_Count;
 
     // Start is called before the first frame update
     void Start()
@@ -26,10 +29,21 @@ public class PlayerWalkController : MonoBehaviour
         //Se mueve hacia donde mire la camara al tocar sobre la pantalla del celular,(para cardboards).
         if (Input.GetButton("Fire1"))
         {
-            obj_Player.transform.position = obj_Player.transform.position + Camera.main.transform.forward * int_PlayerSpeed * Time.deltaTime;
+            transform.position = transform.position + Camera.main.transform.forward * int_PlayerSpeed * Time.deltaTime;
+        }
+        if(int_Count == 4)
+        {
+            obj_Wall.SetActive(false);
         }
         //Fin
+    }
 
-
+    private void OnTriggerEnter(Collider coll_Other)
+    {
+        if(coll_Other.gameObject.CompareTag("Coin"))
+        {
+            Destroy(coll_Other.gameObject);
+            int_Count++;
+        }
     }
 }
