@@ -5,25 +5,27 @@ using UnityEngine;
 public class RotateCubeController : MonoBehaviour
 {
     [SerializeField]
-    private float fl_SpinForce;
+    private float fl_SpinForce = 45f;
 
     [SerializeField]
-    private GameObject obj_Cube;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private bool bl_IsSpinning = false;
 
     // Update is called once per frame
     void Update()
     {
-        obj_Cube.transform.Rotate(0, fl_SpinForce * Time.deltaTime, 0);
+        if(bl_IsSpinning)
+        {
+            transform.Rotate(0, fl_SpinForce * Time.deltaTime, 0);
+        }
+        else if(!bl_IsSpinning)
+        {
+            transform.Rotate(0, 0, 0);
+        }
+
     }
 
     public void ChangeSpin()
     {
-        fl_SpinForce = -fl_SpinForce;
+        bl_IsSpinning = !bl_IsSpinning;
     }
 }
